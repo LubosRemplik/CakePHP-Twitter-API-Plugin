@@ -140,10 +140,10 @@ class TwitterAuthComponent extends Object {
     if (in_array('twitter', $sources)) {
       return ConnectionManager::getDataSource('twitter');
     }
-    
+
     App::import('DataSource', 'Twitter.TwitterSource');
     return new TwitterSource();
-    
+
   }
 
   /**
@@ -186,7 +186,7 @@ class TwitterAuthComponent extends Object {
   /**
    * The second stage of the OAuth Dance with Twitter. Redirects the user to
    * Twitter so they can authorize your application.
-   * 
+   *
    * @param string $oAuthRequestToken
    * @return void
    */
@@ -197,7 +197,7 @@ class TwitterAuthComponent extends Object {
   /**
    * The third stage of the OAuth Dance with Twitter. Gets OAuth Access Token
    * and OAuth Access Token Secret from Twitter.
-   * 
+   *
    * @param string $oAuthConsumerKey
    * @param string $oAuthConsumerSecret
    * @param string $oAuthRequestToken
@@ -239,9 +239,9 @@ class TwitterAuthComponent extends Object {
    * This is a convenience method that you can call from your controller action
    * that you link to from your views to sign in with twitter, if you don't need
    * to do anything special that deviates from the default approach.
-   * 
+   *
    * In your controller action you simply do:
-   * 
+   *
    *     public function twitter_connect($redirect = null) {
    *       $this->TwitterAuth->connect(urldecode($redirect));
    *     }
@@ -295,11 +295,11 @@ class TwitterAuthComponent extends Object {
     if ($requestToken) {
       $this->Session->write('Twitter.Auth.oauth_request_token', $requestToken['oauth_token']);
       $this->Session->write('Twitter.Auth.oauth_request_token_secret', $requestToken['oauth_token_secret']);
-      $this->TwitterAuth->authorize($requestToken['oauth_token']);
+      $this->authorize($requestToken['oauth_token']);
     } else {
       $this->_error(__('Could not get OAuth Request Token from Twitter', true), $redirect);
     }
-    
+
   }
 
   /**
@@ -307,13 +307,13 @@ class TwitterAuthComponent extends Object {
    * that twitter redirects the user back to after they authorized your
    * application, if you don't need to do anything special that deviates from
    * the default approach.
-   * 
+   *
    * In your controller action you simply do:
-   * 
+   *
    *     public function twitter_callback() {
    *       $this->TwitterAuth->callback();
    *     }
-   * 
+   *
    * This method exchanges the authorised request token for the OAuth Access
    * Token and OAuth Access Token Secret and stores them in the session before
    * redirecting the user back to the URL passed in in the redirect parameter to
@@ -357,7 +357,7 @@ class TwitterAuthComponent extends Object {
     }
     $oAuthVerifier = $this->params['url']['oauth_verifier'];
 
-    $accessToken = $this->TwitterAuth->getOAuthAccessToken($oAuthConsumerKey, $oAuthConsumerSecret, $oAuthRequestToken, $oAuthRequestTokenSecret, $oAuthVerifier);
+    $accessToken = $this->getOAuthAccessToken($oAuthConsumerKey, $oAuthConsumerSecret, $oAuthRequestToken, $oAuthRequestTokenSecret, $oAuthVerifier);
 
     if ($accessToken) {
 
@@ -366,21 +366,21 @@ class TwitterAuthComponent extends Object {
       $this->Session->write('Twitter.Auth', $sessionData);
 
       if ($redirect) {
-        $this->redirect($redirect);
+        $this->controller->redirect($redirect);
       } else {
         die(pr($this->Session->read('Twitter.Auth')));
       }
-      
+
     } else {
       $this->_error(__('Could not get OAuth Access Token from Twitter', true), $redirect);
     }
-    
+
   }
 
   /**
    * Sets message in session flash and redirects to redirect URL if not empty,
    * else just dump the message out on the screen.
-   * 
+   *
    * @param string $message
    * @param string $redirect
    */
@@ -392,7 +392,7 @@ class TwitterAuthComponent extends Object {
     }
 
     die($message);
-    
+
   }
 
 }
