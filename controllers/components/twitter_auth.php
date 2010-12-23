@@ -132,9 +132,7 @@ class TwitterAuthComponent extends Object {
    * @return DataSource object
    */
   public function getDataSource() {
-
-    // Get the list of datasources that the ConnectionManager is aware of
-    $sources = ConnectionManager::sourceList();
+    $sources = array_keys(get_class_vars('DATABASE_CONFIG'));
 
     // If the twitter datasource is in it, return it
     if (in_array('twitter', $sources)) {
