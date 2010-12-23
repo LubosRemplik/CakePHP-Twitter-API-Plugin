@@ -189,7 +189,7 @@ class TwitterAuthComponent extends Object {
    * @return void
    */
   public function authorize($oAuthRequestToken) {
-    $this->controller->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $oAuthRequestToken);
+    $this->controller->redirect('https://api.twitter.com/oauth/authenticate?oauth_token=' . $oAuthRequestToken);
   }
 
   /**
