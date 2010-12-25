@@ -350,10 +350,10 @@ class TwitterAuthComponent extends Object {
     }
     $oAuthRequestTokenSecret = $this->Session->read('Twitter.Auth.oauth_request_token_secret');
 
-    if (empty($this->params['url']['oauth_verifier'])) {
+    if (empty($this->controller->params['url']['oauth_verifier'])) {
       $this->_error(__('Could not get OAuth Verifier from querystring', true), $redirect);
     }
-    $oAuthVerifier = $this->params['url']['oauth_verifier'];
+    $oAuthVerifier = $this->controller->params['url']['oauth_verifier'];
 
     $accessToken = $this->getOAuthAccessToken($oAuthConsumerKey, $oAuthConsumerSecret, $oAuthRequestToken, $oAuthRequestTokenSecret, $oAuthVerifier);
 
