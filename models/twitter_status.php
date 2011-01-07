@@ -59,7 +59,7 @@ class TwitterStatus extends TwitterAppModel {
 
   /**
    * Custom find types available on this model
-   * 
+   *
    * @var array
    */
   public $_findMethods = array(
@@ -93,7 +93,7 @@ class TwitterStatus extends TwitterAppModel {
 
   /**
    * The options allowed by each of the custom find types
-   * 
+   *
    * @var array
    */
   public $allowedFindOptions = array(
@@ -126,7 +126,7 @@ class TwitterStatus extends TwitterAppModel {
    * Twitter's API uses a count parameter where in CakePHP we'd normally use
    * limit, so we also copy the limit value to count so we can use our familiar
    * params.
-   * 
+   *
    * @param string $type
    * @param array $options
    * @return mixed
@@ -209,17 +209,15 @@ class TwitterStatus extends TwitterAppModel {
 
   /**
    * Creates a tweet
-   * 
+   *
    * @param mixed $data
    * @param mixed $validate
    * @param mixed $fieldList
    * @return mixed
    */
   public function tweet($data = null, $validate = true, $fieldList = array()) {
-    $this->request = array(
-      'uri' => array(
+    $this->request['uri'] = array(
         'path' => '1/statuses/update',
-      ),
     );
     if (isset($data['TwitterStatus']['text'])) {
       $this->request['body'] = array(
@@ -255,14 +253,16 @@ class TwitterStatus extends TwitterAppModel {
 
   /**
    * Called by tweet or retweet
-   * 
+   *
    * @param mixed $data
    * @param mixed $validate
    * @param mixed $fieldList
    * @return mixed
    */
   public function save($data = null, $validate = true, $fieldList = array()) {
-    $this->request['auth'] = true;
+    if (!isset($this->request['auth']) || !$this->request['auth']) {
+        $this->request['auth'] = true;
+    }
     $result = parent::save($data, $validate, $fieldList);
     if ($result && !empty($this->response['id'])) {
       $this->setInsertID($this->response['id']);
@@ -272,7 +272,7 @@ class TwitterStatus extends TwitterAppModel {
 
   /**
    * Deletes a tweet
-   * 
+   *
    * @param integer $id Id of the tweet to be deleted
    * @param boolean $cascade
    * @return boolean
