@@ -59,7 +59,7 @@ class TwitterAppModel extends AppModel {
   /**
    * Merges passed config with datasource existing config and returns the merged
    * array.
-   * 
+   *
    * @param array $config
    * @return array
    */
@@ -74,4 +74,3 @@ class TwitterAppModel extends AppModel {
 
 }
 ?>
-
