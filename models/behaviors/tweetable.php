@@ -57,7 +57,11 @@ class TweetableBehavior extends ModelBehavior
                 'text' => $text,
             ),
         );
-        return $Model->TwitterStatus->tweet($tweet);
+        if (Configure::read('debug') < 2) {
+            return $Model->TwitterStatus->tweet($tweet);
+        } else {
+            return $Model->log($tweet, LOG_NOTICE);
+        }
     }
 
 }
