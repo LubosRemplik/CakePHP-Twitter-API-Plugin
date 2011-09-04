@@ -29,24 +29,24 @@ class TweetableBehavior extends ModelBehavior
      * @param string $text
      * @return boolean
      */
-    function tweet(&$Model, $userID, $text)
+    function tweet(&$Model, $user, $text)
     {
-        $params = array(
-            'conditions' => array(
-                $Model->alias.'.id = ' => $userID,
-            ),
-            'fields' => array(
-                $Model->alias.'.twitter_oauth_token',
-                $Model->alias.'.twitter_oauth_token_secret',
-            ),
-            'recursive' => -1,
-        );
-        if (!$data = $Model->find('first', $params)) {
-            return false;
+        if (!is_array($user) || !array_key_exists($Model->alias, $user)) {
+            $params = array(
+                'conditions' => array(
+                    $Model->alias.'.id = ' => $user,
+                ),
+                'fields' => array(
+                    $Model->alias.'.twitter_oauth_token',
+                    $Model->alias.'.twitter_oauth_token_secret',
+                ),
+                'recursive' => -1,
+            );
+            $user = $Model->find('first', $params);
         }
         $fields = array('oauth_token', 'oauth_token_secret');
         foreach ($fields as $field) {
-            $dataField = 'twitter_'.$field;
+            $dataField = 'twitter_' . $field;
             if (empty($data[$Model->alias][$dataField])) {
                 return false;
             }
