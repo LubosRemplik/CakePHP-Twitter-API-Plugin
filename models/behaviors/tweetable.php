@@ -47,16 +47,17 @@ class TweetableBehavior extends ModelBehavior
         $fields = array('oauth_token', 'oauth_token_secret');
         foreach ($fields as $field) {
             $dataField = 'twitter_' . $field;
-            if (empty($data[$Model->alias][$dataField])) {
+            if (empty($user[$Model->alias][$dataField])) {
                 return false;
             }
-            $Model->TwitterStatus->request['auth'][$field] = $data[$Model->alias][$dataField];
+            $Model->TwitterStatus->request['auth'][$field] = $user[$Model->alias][$dataField];
         }
         $tweet = array(
             $Model->TwitterStatus->alias => array(
                 'text' => $text,
             ),
         );
+        $this->log($tweet);
         if (Configure::read('debug') < 2) {
             return $Model->TwitterStatus->tweet($tweet);
         } else {
