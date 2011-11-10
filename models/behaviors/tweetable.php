@@ -1,4 +1,6 @@
 <?php
+App::import('Lib', 'Twitter.TwitterUtils');
+
 /**
  * Tweetable Behavior
  *
@@ -29,8 +31,18 @@ class TweetableBehavior extends ModelBehavior
      * @param string $text
      * @return boolean
      */
-    function tweet(&$Model, $user, $text)
+    function tweet(&$Model, $user, $text, $options = array())
     {
+        $defaults = array(
+            'shorten' => true,
+            'tail' => '...',
+        );
+        $options = array_merge($defaults, $options);
+
+        if ($options['shorten']) {
+            $text = TwitterUtils::shorten($text, $options['tail']);
+        }
+
         if (!is_array($user) || !array_key_exists($Model->alias, $user)) {
             $params = array(
                 'conditions' => array(
@@ -57,7 +69,6 @@ class TweetableBehavior extends ModelBehavior
                 'text' => $text,
             ),
         );
-        $this->log($tweet);
         if (Configure::read('debug') < 2) {
             return $Model->TwitterStatus->tweet($tweet);
         } else {
