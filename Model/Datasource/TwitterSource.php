@@ -48,7 +48,7 @@ class TwitterSource extends RestSource {
 
     $config = array_merge($defaults, $config);
       
-    App::import('Vendor', 'HttpSocketOauth');
+    App::import('Vendor', 'Twitter.http_socket_oauth');
     parent::__construct($config, new HttpSocketOauth());
     
   }
