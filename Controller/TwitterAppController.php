@@ -113,7 +113,7 @@ class TwitterAppController extends AppController {
       $this->Session->write('Twitter.Auth.oauth_request_token_secret', $requestToken['oauth_token_secret']);
       $this->TwitterAuth->authorize($requestToken['oauth_token']);
     } else {
-      $error = __('Could not get OAuth Request Token from Twitter', true);
+      $error = __('Could not get OAuth Request Token from Twitter');
       if ($returnTo) {
         $this->Session->setFlash($error);
         $this->redirect($returnTo);
@@ -156,7 +156,7 @@ class TwitterAppController extends AppController {
         die(pr($this->Session->read('Twitter.Auth')));
       }
     } else {
-      $error = __('Could not get OAuth Access Token from Twitter', true);
+      $error = __('Could not get OAuth Access Token from Twitter');
       if ($this->Session->check('Twitter.Auth.return_to')) {
         $this->redirect($this->Session->read('Twitter.Auth.return_to'));
       } else {

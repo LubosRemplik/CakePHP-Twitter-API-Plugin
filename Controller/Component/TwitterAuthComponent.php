@@ -30,7 +30,7 @@
  * @copyright (c) 2010 Neil Crookes
  * @license MIT License - http://www.opensource.org/licenses/mit-license.php
  */
-class TwitterAuthComponent extends Object {
+class TwitterAuthComponent extends Component {
 
   /**
    * The other components used by this component
@@ -275,16 +275,16 @@ class TwitterAuthComponent extends Object {
 
     $ds = $this->getDataSource();
     if (!$ds) {
-      $this->_error(__('Could not get datasource', true), $redirect);
+      $this->_error(__('Could not get datasource'), $redirect);
     }
 
     if (!isset($ds->config['oauth_consumer_key'])) {
-      $this->_error(__('Could not get OAuth Consumer Key', true), $redirect);
+      $this->_error(__('Could not get OAuth Consumer Key'), $redirect);
     }
     $oAuthConsumerKey = $ds->config['oauth_consumer_key'];
 
     if (!isset($ds->config['oauth_consumer_secret'])) {
-      $this->_error(__('Could not get OAuth Consumer Secret', true), $redirect);
+      $this->_error(__('Could not get OAuth Consumer Secret'), $redirect);
     }
     $oAuthConsumerSecret = $ds->config['oauth_consumer_secret'];
 
@@ -295,7 +295,7 @@ class TwitterAuthComponent extends Object {
       $this->Session->write('Twitter.Auth.oauth_request_token_secret', $requestToken['oauth_token_secret']);
       $this->authorize($requestToken['oauth_token']);
     } else {
-      $this->_error(__('Could not get OAuth Request Token from Twitter', true), $redirect);
+      $this->_error(__('Could not get OAuth Request Token from Twitter'), $redirect);
     }
 
   }
@@ -327,31 +327,31 @@ class TwitterAuthComponent extends Object {
 
     $ds = $this->getDataSource();
     if (!$ds) {
-      $this->_error(__('Could not get datasource', true), $redirect);
+      $this->_error(__('Could not get datasource'), $redirect);
     }
 
     if (!isset($ds->config['oauth_consumer_key'])) {
-      $this->_error(__('Could not get OAuth Consumer Key', true), $redirect);
+      $this->_error(__('Could not get OAuth Consumer Key'), $redirect);
     }
     $oAuthConsumerKey = $ds->config['oauth_consumer_key'];
 
     if (!isset($ds->config['oauth_consumer_secret'])) {
-      $this->_error(__('Could not get OAuth Consumer Secret', true), $redirect);
+      $this->_error(__('Could not get OAuth Consumer Secret'), $redirect);
     }
     $oAuthConsumerSecret = $ds->config['oauth_consumer_secret'];
 
     if (!$this->Session->check('Twitter.Auth.oauth_request_token')) {
-      $this->_error(__('Could not get OAuth Request Token from session', true), $redirect);
+      $this->_error(__('Could not get OAuth Request Token from session'), $redirect);
     }
     $oAuthRequestToken = $this->Session->read('Twitter.Auth.oauth_request_token');
 
     if (!$this->Session->check('Twitter.Auth.oauth_request_token_secret')) {
-      $this->_error(__('Could not get OAuth Request Token Secret from session', true), $redirect);
+      $this->_error(__('Could not get OAuth Request Token Secret from session'), $redirect);
     }
     $oAuthRequestTokenSecret = $this->Session->read('Twitter.Auth.oauth_request_token_secret');
 
     if (empty($this->controller->params['url']['oauth_verifier'])) {
-      $this->_error(__('Could not get OAuth Verifier from querystring', true), $redirect);
+      $this->_error(__('Could not get OAuth Verifier from querystring'), $redirect);
     }
     $oAuthVerifier = $this->controller->params['url']['oauth_verifier'];
 
@@ -370,7 +370,7 @@ class TwitterAuthComponent extends Object {
       }
 
     } else {
-      $this->_error(__('Could not get OAuth Access Token from Twitter', true), $redirect);
+      $this->_error(__('Could not get OAuth Access Token from Twitter'), $redirect);
     }
 
   }

@@ -12,6 +12,6 @@
       'type' => 'hidden'
     ));
   }
-  echo $this->Form->end(__('Tweet', true));
+  echo $this->Form->end(__('Tweet'));
   ?>
 <?php endif; ?>

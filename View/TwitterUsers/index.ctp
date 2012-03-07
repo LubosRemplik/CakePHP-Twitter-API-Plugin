@@ -17,5 +17,5 @@
   </ol>
   <?php echo $pagination; ?>
 <?php else : ?>
-  <p><?php __('There are no users'); ?></p>
+  <p><?php echo __('There are no users'); ?></p>
 <?php endif; ?>

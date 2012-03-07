@@ -1,6 +1,6 @@
 <?php
 if (!isset($linkText)) {
-  $linkText = __('Connect with Twitter', true);
+  $linkText = __('Connect with Twitter');
 }
 echo $this->Html->link(
   $linkText,

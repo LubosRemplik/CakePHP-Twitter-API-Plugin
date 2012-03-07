@@ -27,7 +27,7 @@
 <head>
 	<?php echo $html->charset(); ?>
 	<title>
-		<?php __('CakePHP Twitter Plugin by @neilcrookes'); ?>
+		<?php echo __('CakePHP Twitter Plugin by @neilcrookes'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -41,13 +41,13 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $html->link(__('CakePHP Twitter Plugin by @neilcrookes', true), 'http://twitter.com/neilcrookes'); ?></h1>
+			<h1><?php echo $html->link(__('CakePHP Twitter Plugin by @neilcrookes'), 'http://twitter.com/neilcrookes'); ?></h1>
 		</div>
 		<div id="content">
       <?php if (!$this->Session->read('Twitter.Auth.isAuthorized')) : ?>
         <?php echo $this->element('oauth_login_link'); ?>
       <?php else : ?>
-        <?php echo $this->Html->link(__('Logout', true), array('action' => 'logout')); ?>
+        <?php echo $this->Html->link(__('Logout'), array('action' => 'logout')); ?>
       <?php endif; ?>
       <ul>
         <?php
@@ -88,7 +88,7 @@
           ),
         );
         foreach ($nav as $text => $url) {
-          echo '<li>' . $html->link(__($text, true), $url) . '</li>';
+          echo '<li>' . $html->link(__($text), $url) . '</li>';
         }
         ?>
       </ul>
@@ -98,7 +98,7 @@
 		</div>
 		<div id="footer">
 			<?php echo $html->link(
-					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
+					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework"), 'border'=>"0")),
 					'http://www.cakephp.org/',
 					array('target'=>'_blank'), null, false
 				);

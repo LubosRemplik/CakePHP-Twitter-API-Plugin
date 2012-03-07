@@ -20,7 +20,7 @@
 
   <?php else : ?>
 
-    <p><?php __('There are no tweets'); ?></p>
+    <p><?php echo __('There are no tweets'); ?></p>
 
   <?php endif; ?>
 

@@ -16,7 +16,7 @@ class TwitpicsController extends TwitterAppController {
     if (!empty($this->data)) {
       if ($this->TwitterAuth->isAuthorized) {
         if ($this->Twitpic->save($this->data)) {
-          $this->Session->setFlash(__('Twitpic created successfully', true));
+          $this->Session->setFlash(__('Twitpic created successfully'));
           $this->redirect(array('action' => 'view', $this->Twitpic->getInsertID()));
         } else {
           if (!empty($this->Twitpic->response['error'])) {
@@ -27,11 +27,11 @@ class TwitpicsController extends TwitterAppController {
               $flashMessage .= Inflector::humanize($field) . ': ' . $errorMessage;
             }
           } else {
-            $flashMessage = __('Unknown error', true);
+            $flashMessage = __('Unknown error');
           }
         }
       } else {
-        $flashMessage = __('You are not authorized', true);
+        $flashMessage = __('You are not authorized');
       }
       $this->Session->setFlash($flashMessage);
     }

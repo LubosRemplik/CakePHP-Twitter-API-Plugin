@@ -41,7 +41,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Reply', true),
+          __('Reply'),
           array(
             'status' => '@' .  $status['user']['screen_name'],
             'in_reply_to_status_id' => $status['id'],
@@ -53,7 +53,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Favorite', true),
+          __('Favorite'),
           array(
             'plugin' => 'twitter',
             'controller' => 'twitter_statuses',
@@ -66,7 +66,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Retweet', true),
+          __('Retweet'),
           array(
             'plugin' => 'twitter',
             'controller' => 'twitter_statuses',
@@ -79,7 +79,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Retweets', true),
+          __('Retweets'),
           array(
             'plugin' => 'twitter',
             'controller' => 'twitter_statuses',
@@ -93,7 +93,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Retweeted By', true),
+          __('Retweeted By'),
           array(
             'plugin' => 'twitter',
             'controller' => 'twitter_statuses',
@@ -108,7 +108,7 @@
       <li>
         <?php
         echo $this->Html->link(
-          __('Delete', true),
+          __('Delete'),
           array(
             'plugin' => 'twitter',
             'controller' => 'twitter_statuses',

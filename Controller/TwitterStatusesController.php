@@ -50,11 +50,11 @@ class TwitterStatusesController extends TwitterAppController {
    */
   public function view($id = null) {
     if (!$id) {
-      $this->cakeError('error404', array('message' => __('Missing parameter ID', true)));
+      $this->cakeError('error404', array('message' => __('Missing parameter ID')));
     }
     $status = $this->TwitterStatus->find('show', array('id' => $id));
     if (!$status) {
-      $this->cakeError('error404', array('message' => __('Invalid ID', true)));
+      $this->cakeError('error404', array('message' => __('Invalid ID')));
     }
     $this->set(compact('status'));
   }
@@ -66,7 +66,7 @@ class TwitterStatusesController extends TwitterAppController {
     if (!empty($this->data)) {
       if ($this->TwitterAuth->isAuthorized) {
         if ($this->TwitterStatus->tweet($this->data)) {
-          $flashMessage = __('Your status has been updated', true);
+          $flashMessage = __('Your status has been updated');
         } else {
           if (!empty($this->TwitterStatus->response['error'])) {
             $flashMessage = $this->TwitterStatus->response['error'];
@@ -76,11 +76,11 @@ class TwitterStatusesController extends TwitterAppController {
               $flashMessage .= Inflector::humanize($field) . ': ' . $errorMessage;
             }
           } else {
-            $flashMessage = __('Unknown error', true);
+            $flashMessage = __('Unknown error');
           }
         }
       } else {
-        $flashMessage = __('You are not authorized', true);
+        $flashMessage = __('You are not authorized');
       }
     }
     $this->Session->setFlash($flashMessage);
@@ -92,20 +92,20 @@ class TwitterStatusesController extends TwitterAppController {
    */
   public function retweet($id = null) {
     if (!$id) {
-      $this->cakeError('error404', array('message' => __('Missing parameter ID', true)));
+      $this->cakeError('error404', array('message' => __('Missing parameter ID')));
     }
     if ($this->TwitterAuth->isAuthorized) {
       if ($this->TwitterStatus->retweet($id)) {
-        $flashMessage = __('Your status has been updated', true);
+        $flashMessage = __('Your status has been updated');
       } else {
         if (!empty($this->TwitterStatus->response['error'])) {
           $flashMessage = $this->TwitterStatus->response['error'];
         } else {
-          $flashMessage = __('Unknown error', true);
+          $flashMessage = __('Unknown error');
         }
       }
     } else {
-      $flashMessage = __('You are not authorized', true);
+      $flashMessage = __('You are not authorized');
     }
     $this->Session->setFlash($flashMessage);
     $this->redirect($this->referer('/', true));
@@ -116,20 +116,20 @@ class TwitterStatusesController extends TwitterAppController {
    */
   public function delete($id = null) {
     if (!$id) {
-      $this->cakeError('error404', array('message' => __('Missing parameter ID', true)));
+      $this->cakeError('error404', array('message' => __('Missing parameter ID')));
     }
     if ($this->TwitterAuth->isAuthorized) {
       if ($this->TwitterStatus->delete($id)) {
-        $flashMessage = __('Your status has been deleted', true);
+        $flashMessage = __('Your status has been deleted');
       } else {
         if (!empty($this->TwitterStatus->response['error'])) {
           $flashMessage = $this->TwitterStatus->response['error'];
         } else {
-          $flashMessage = __('Unknown error', true);
+          $flashMessage = __('Unknown error');
         }
       }
     } else {
-      $flashMessage = __('You are not authorized', true);
+      $flashMessage = __('You are not authorized');
     }
     $this->Session->setFlash($flashMessage);
     $this->redirect($this->referer('/', true));
