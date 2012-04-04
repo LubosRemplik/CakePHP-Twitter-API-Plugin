@@ -16,7 +16,7 @@ class TwitterAppController extends AppController {
    *
    * @var array
    */
-  public $components = array('TwitterAuth');
+  public $components = array('Twitter.TwitterAuth');
 
   /**
    * Overrides CakePHP's default paging settings
@@ -94,11 +94,8 @@ class TwitterAppController extends AppController {
    * @param string $returnTo The url to return to on success or failure. N.B.
    * should be urlencode()'d 3 times in HtmlHelper::link().
    */
-  public function connect($returnTo = null) {
-
-    if ($returnTo) {
-      $this->Session->write('Twitter.Auth.return_to', urldecode($returnTo));
-    }
+  public function connect() {
+	$this->Session->write('Twitter.Auth.return_to', $this->request->referer());
 
     $ds = $this->TwitterAuth->getDataSource();
     $oAuthConsumerKey = $ds->config['oauth_consumer_key'];

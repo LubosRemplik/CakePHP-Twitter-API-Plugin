@@ -1,8 +1,8 @@
 <tr id="user_<?php echo $user['id']; ?>" class="user following odd">
   <td class="thumb vcard">
     <?php
-    echo $html->link(
-      $html->image($user['profile_image_url'], array(
+    echo $this->Html->link(
+      $this->Html->image($user['profile_image_url'], array(
         'height' => '48',
         'width' => '48'
       )),
@@ -23,7 +23,7 @@
     <address class="about vcard">
       <span class="label screenname">
         <?php
-        echo $html->link($user['screen_name'], array(
+        echo $this->Html->link($user['screen_name'], array(
           'plugin' => 'twitter',
           'controller' => 'twitter_statuses',
           'action' => 'index',

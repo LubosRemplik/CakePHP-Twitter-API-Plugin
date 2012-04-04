@@ -67,17 +67,10 @@ class TwitterAuthComponent extends Component {
    */
   public $isAuthorized = false;
 
-  /**
-   * Called before Controller::beforeFilter(), stores reference to Controller
-   * object
-   *
-   * @param AppController $controller
-   * @return void
-   * @access public
-   */
-  public function initialize(&$controller) {
-    $this->controller =& $controller;
-  }
+    function __construct(ComponentCollection $collection, $settings = array()) {
+		parent::__construct($collection, $settings);
+		$this->controller = $collection->getController();
+	}
 
   /**
    * Checks if we are authorized to access a users Twitter account via the API
@@ -132,13 +125,6 @@ class TwitterAuthComponent extends Component {
    * @return DataSource object
    */
   public function getDataSource() {
-    $sources = array_keys(get_class_vars('DATABASE_CONFIG'));
-
-    // If the twitter datasource is in it, return it
-    if (in_array('twitter', $sources)) {
-      return ConnectionManager::getDataSource('twitter');
-    }
-
     App::import('DataSource', 'Twitter.TwitterSource');
     return new TwitterSource();
 

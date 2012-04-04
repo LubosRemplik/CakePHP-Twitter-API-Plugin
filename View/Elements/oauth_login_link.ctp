@@ -6,8 +6,8 @@ echo $this->Html->link(
   $linkText,
   array(
     'plugin' => 'twitter',
+	'controller' => 'twitter_app',
     'action' => 'connect',
-    urlencode(urlencode(urlencode($this->here)))
   )
 );
 ?>

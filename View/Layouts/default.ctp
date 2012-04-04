@@ -25,15 +25,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<?php echo $html->charset(); ?>
+	<?php echo $this->Html->charset(); ?>
 	<title>
 		<?php echo __('CakePHP Twitter Plugin by @neilcrookes'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
-		echo $html->meta('icon');
+		echo $this->Html->meta('icon');
 
-		echo $html->css('cake.generic');
+		echo $this->Html->css('cake.generic');
 
 		echo $scripts_for_layout;
 	?>
@@ -41,7 +41,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $html->link(__('CakePHP Twitter Plugin by @neilcrookes'), 'http://twitter.com/neilcrookes'); ?></h1>
+			<h1><?php echo $this->Html->link(__('CakePHP Twitter Plugin by @neilcrookes'), 'http://twitter.com/neilcrookes'); ?></h1>
 		</div>
 		<div id="content">
       <?php if (!$this->Session->read('Twitter.Auth.isAuthorized')) : ?>
@@ -88,7 +88,7 @@
           ),
         );
         foreach ($nav as $text => $url) {
-          echo '<li>' . $html->link(__($text), $url) . '</li>';
+          echo '<li>' . $this->Html->link(__($text), $url) . '</li>';
         }
         ?>
       </ul>
@@ -97,8 +97,8 @@
 
 		</div>
 		<div id="footer">
-			<?php echo $html->link(
-					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework"), 'border'=>"0")),
+			<?php echo $this->Html->link(
+					$this->Html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework"), 'border'=>"0")),
 					'http://www.cakephp.org/',
 					array('target'=>'_blank'), null, false
 				);

@@ -46,6 +46,13 @@ class TwitterSource extends RestSource {
       $defaults = array_merge($defaults, $configureConfig);
     }
 
+	if (class_exists('FrontpageSite')) {
+		$oauth_token = FrontpageSite::get('twitter_oauth_token');
+		$oauth_token_secret = FrontpageSite::get('twitter_oauth_token_secret');
+		$fsconfig = compact('oauth_token', 'oauth_token_secret');
+		$defaults = array_merge($defaults, $fsconfig);
+	}
+
     $config = array_merge($defaults, $config);
       
     App::import('Vendor', 'Twitter.http_socket_oauth');
