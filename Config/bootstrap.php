@@ -3,17 +3,7 @@ App::uses('CakeSession', 'Model/Datasource');
 if (!CakeSession::check('OAuth.twitter.oauth_token')
 || !CakeSession::check('OAuth.twitter.oauth_token_secret')) {
 	App::uses('ClassRegistry', 'Utility');
-	$AppPreference = ClassRegistry::init('AppPreference');
-	$AppPreference->Behaviors->load('Expandable.Expandable', array(
-		'with' => 'AppPreferenceExpanded'
-	));
-	$AppPreference->bindModel(array(
-		'hasMany' => array(
-			'AppPreferenceExpanded' => array(
-				'className' => 'App.AppPreferenceExpanded'
-			)
-		)
-	));
+	$AppPreference = ClassRegistry::init('App.AppPreference');
 	$data = $AppPreference->find('first', array(
 		'fields' => 'AppPreference.*',
 		'contain' => array('AppPreferenceExpanded')
