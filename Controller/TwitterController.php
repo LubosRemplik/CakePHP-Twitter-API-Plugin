@@ -20,11 +20,4 @@ class TwitterController extends AppController {
 		$this->Oauth->callback();
 	}
 
-	public function userTimeline($count = 5, $include_rts = true) {
-		$data = $this->TwitterStatuses->userTimeline(array(
-			'count' => $count,
-			'include_rts' => $include_rts
-		));
-		return $data;
-	}
 }

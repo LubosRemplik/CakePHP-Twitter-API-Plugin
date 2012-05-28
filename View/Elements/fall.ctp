@@ -1,13 +1,13 @@
 <?php
 App::uses('TwitterHelper', 'Twitter.View/Helper');
-$this->Twitter = new TwitterHelper($this);
-$data = $this->requestAction(array(
-	'plugin' => 'twitter',
-	'controller' => 'twitter',
-	'action' => 'userTimeline'
+App::uses('TwitterStatuses', 'Twitter.Model');
+$TTS = new TwitterStatuses();
+$TTH = new TwitterHelper($this);
+$data = $TTS->userTimeline(array(
+	'count' => 5,
+	'include_rts' => true 
 ));
 $output = '';
-$output .= $this->Html->tag('h2', 'Twitter fall');
 if (!empty($data)) {
 	$tweets = '';
 	foreach ($data as $item) {
@@ -15,7 +15,7 @@ if (!empty($data)) {
 		$tweet .= $item['text'];
 		$tweets .= $this->Html->div('tweet', $tweet);
 	}
-	$output .= $this->Twitter->parseContent($tweets); 
+	$output .= $TTH->parseContent($tweets); 
 } else {
 	$output .= $this->element('Frontpage.no_data');
 }
