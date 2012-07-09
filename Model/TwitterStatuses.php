@@ -1,7 +1,7 @@
 <?php
 App::uses('TwitterAppModel', 'Twitter.Model');
 class TwitterStatuses extends TwitterAppModel {
-
+	
 	/**
 	 * https://dev.twitter.com/docs/api/1/get/statuses/home_timeline
 	 **/
@@ -29,6 +29,15 @@ class TwitterStatuses extends TwitterAppModel {
 				$options['query'] = $query;
 			}
 			$data = $this->find('all', $options);
+			
+			foreach($data as $k => $v) {
+				$data[$k]['text'] = str_replace(
+					array('&lt;', '&gt;'),
+					'',
+					$data[$k]['text']
+				);
+			}
+			
 			Cache::write($cacheKey, $data);
 		}
 		return $data;

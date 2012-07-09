@@ -9,4 +9,5 @@ class TwitterHelper extends AppHelper {
 		$content = preg_replace("/#(\w+)/", "<a href=\"http://twitter.com/#!search/%23\\1\" target=\"_blank\">#\\1</a>", $content);
 		return $content;
 	}
+	
 }
