@@ -4,10 +4,6 @@ App::uses('CakeSession', 'Model/Datasource');
 App::uses('Hash', 'Utility');
 App::uses('HttpSocket', 'Network/Http');
 App::uses('Set', 'Utility');
-App::uses('OauthHelper', 'OauthLib.Lib');
-App::uses('Consumer', 'OauthLib.Lib');
-App::uses('RequestToken', 'OauthLib.Lib');
-App::uses('RequestFactory', 'OauthLib.Lib');
 class TwitterApi extends AppModel {
 
 	public $useTable = false;
@@ -27,14 +23,27 @@ class TwitterApi extends AppModel {
 
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$session = CakeSession::read($this->_strategy);
-		$configure = Configure::read(sprintf(
-			'Opauth.Strategy.%s', 
-			$this->_strategy
-		));
-		if (!empty($session) && !empty($configure)) {
-			$this->_config = array_merge($session, $configure);
+		if (!CakeSession::check($this->_strategy)) {
+			$config = ClassRegistry::init('Opauth.OpauthSetting')
+				->findByName($this->_strategy);
+			if (!empty($config['OpauthSetting'])) {
+				CakeSession::write($this->_strategy, $config['OpauthSetting']);
+			}
 		}
+		$this->_config = CakeSession::read($this->_strategy);
+	}
+
+	protected function _generateCacheKey() {
+		$backtrace = debug_backtrace();
+		$cacheKey = array();
+		$cacheKey[] = $this->alias;
+		if (!empty($backtrace[2]['function'])) {
+			$cacheKey[] = $backtrace[2]['function'];
+		}
+		if ($backtrace[2]['args']) {
+			$cacheKey[] = md5(serialize($backtrace[2]['args']));	
+		}
+		return implode('_', $cacheKey);
 	}
 
 	protected function _parseResponse($response) {
@@ -44,32 +53,35 @@ class TwitterApi extends AppModel {
 	}
 
 	protected function _request($path, $request = array()) {
-		// createding http socket object for later use
-		$HttpSocket = new HttpSocket();
-
 		// preparing request
 		$request = Hash::merge($this->_request, $request);
 		$request['uri']['path'] .= $path;
-		$parameters = array(
-			'oauth_consumer_key' => $this->_config['key'],
-			'oauth_nonce' => OauthHelper::generateKey(),
-			'oauth_timestamp' => time(),
-			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_version' => '1.0',
-			'oauth_token' => $this->_config['credentials']['token']
-		);
-		$Request = RequestFactory::proxy(new MockObject(array(
-			'parameters' => $parameters, 
-			'method' => $request['method'], 
-			'uri' => $HttpSocket->url($request['uri'], '%scheme://%user:%pass@%host:%port/%path?%query#%fragment')
-		)));
-		$signature = $Request->sign(array(
-			'consumer_secret' => $this->_config['secret'], 
-			'token_secret' => $this->_config['credentials']['secret']
-		));	
-		$request['header'] = array(
-			'Authorization' => $Request->oauthHeader()
-		);
+		$strlen = strlen($request['uri']['path']);
+		if (substr($request['uri']['path'], $strlen-5, 5) != '.json') {
+			$request['uri']['path'] .= '.json';
+		}
+
+		// Read cached GET results
+		if ($request['method'] == 'GET') {
+			$cacheKey = $this->_generateCacheKey();
+			$results = Cache::read($cacheKey);
+			if ($results !== false) {
+				return $results;
+			}
+		}
+
+		// createding http socket object with auth configuration
+		$HttpSocket = new HttpSocket();
+		$HttpSocket->configAuth('OauthLib.Oauth', array(
+			'Consumer' => array(
+				'consumer_token' => $this->_config['key'],
+				'consumer_secret' => $this->_config['secret'],
+			),
+			'Token' => array(
+				'token' => $this->_config['token'],
+				'secret' => $this->_config['token_secret']
+			)
+		));
 
 		// issuing request
 		$response = $HttpSocket->request($request);
@@ -86,7 +98,10 @@ class TwitterApi extends AppModel {
 		// parsing response
 		$results = $this->_parseResponse($response);
 
-		// return results
+		// cache and return results
+		if ($request['method'] == 'GET') {
+			Cache::write($cacheKey, $results);
+		}
 		return $results;
 	}
 }
