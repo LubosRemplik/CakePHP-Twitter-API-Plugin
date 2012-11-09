@@ -79,7 +79,7 @@ class TwitterApi extends AppModel {
 			),
 			'Token' => array(
 				'token' => $this->_config['token'],
-				'secret' => $this->_config['token_secret']
+				'secret' => $this->_config['secret2']
 			)
 		));
 
