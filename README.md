@@ -4,7 +4,7 @@ CakePHP Twitter API Plugin
 Requirements
 ------------
 [CakePHP v2.x](https://github.com/cakephp/cakephp)   
-[Opauth](https://github.com/LubosRemplik/cakephp-opauth)
+[Opauth](https://github.com/LubosRemplik/cakephp-opauth)   
 [OauthLib](https://github.com/LubosRemplik/oauth_lib)
 
 How to use it
