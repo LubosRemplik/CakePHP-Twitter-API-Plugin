@@ -88,7 +88,7 @@ class TwitterApi extends AppModel {
 
 		// olny valid response is going to be parsed
 		if ($response->code != 200) {
-			if (Configure::read('debug')) {
+			if (Configure::read('debugApis')) {
 				debug($request);
 				debug($response->body);
 			}
