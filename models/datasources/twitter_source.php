@@ -42,7 +42,7 @@ class TwitterSource extends RestSource {
 
     // Add any config from Configure class that you might have added at any
     // point before the model is instantiated.
-    if (($configureConfig = Configure::read('Twitter.config')) != false) {
+    if (($configureConfig = Configure::read('Twitter')) != false) {
       $defaults = array_merge($defaults, $configureConfig);
     }
 
