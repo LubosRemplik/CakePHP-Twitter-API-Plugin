@@ -95,18 +95,18 @@ class TwitterSource extends RestSource {
     }
 
     // Append '.json' to path if not already got an extension
-    if (strpos($model->request['uri']['path'], '.') === false) {
+	if (strpos($model->request['uri']['path'], '.json') === false) {
       $model->request['uri']['path'] .= '.json';
-    }
+	}
 
     // Get the response from calling request on the Rest Source (it's parent)
     $response = parent::request($model);
 
-//    echo '<pre>';
-//    echo htmlspecialchars($this->Http->request['raw']);
-//    echo htmlspecialchars($this->Http->response['raw']['response']);
-//    echo '</pre>';
-//    die();
+   //echo '<pre>';
+   //echo htmlspecialchars($this->Http->request['raw']);
+   //echo htmlspecialchars($this->Http->response['raw']['response']);
+   //echo '</pre>';
+   //die();
 
     return $response;
 
