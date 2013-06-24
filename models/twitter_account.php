@@ -69,7 +69,7 @@ class TwitterAccount extends TwitterAppModel {
     if (method_exists($this, '_find' . Inflector::camelize($type))) {
       return parent::find($type, $options);
     }
-    $this->request['uri']['path'] = '1/account/' . Inflector::underscore($type);
+    $this->request['uri']['path'] = '1.1/account/' . Inflector::underscore($type);
     if (array_key_exists($type, $this->allowedFindOptions)) {
       $this->request['uri']['query'] = array_intersect_key($options, array_flip($this->allowedFindOptions[$type]));
     }
@@ -94,7 +94,7 @@ class TwitterAccount extends TwitterAppModel {
     if ($state == 'before') {
       $this->request = array(
         'uri' => array(
-          'path' => '1/account/verify_credentials'
+          'path' => '1.1/account/verify_credentials'
         ),
         'auth' => true,
       );

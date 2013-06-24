@@ -151,7 +151,7 @@ class TwitterStatus extends TwitterAppModel {
     if (method_exists($this, '_find' . Inflector::camelize($type))) {
       return parent::find($type, $options);
     }
-    $this->request['uri']['path'] = '1/statuses/' . Inflector::underscore($type);
+    $this->request['uri']['path'] = '1.1/statuses/' . Inflector::underscore($type);
     if (array_key_exists($type, $this->allowedFindOptions)) {
       $this->request['uri']['query'] = array_intersect_key($options, array_flip($this->allowedFindOptions[$type]));
     }
@@ -196,7 +196,7 @@ class TwitterStatus extends TwitterAppModel {
       }
       $this->request = array(
         'uri' => array(
-          'path' => '1/statuses/' . $query['id'] . '/retweeted_by'
+          'path' => '1.1/statuses/' . $query['id'] . '/retweeted_by'
         ),
         'auth' => true,
       );
@@ -217,7 +217,7 @@ class TwitterStatus extends TwitterAppModel {
    */
   public function tweet($data = null, $validate = true, $fieldList = array()) {
     $this->request['uri'] = array(
-        'path' => '1/statuses/update',
+        'path' => '1.1/statuses/update',
     );
     if (isset($data['TwitterStatus']['text'])) {
       $this->request['body'] = array(
@@ -242,7 +242,7 @@ class TwitterStatus extends TwitterAppModel {
     }
     $this->request = array(
       'uri' => array(
-        'path' => '1/statuses/retweet/'.$id,
+        'path' => '1.1/statuses/retweet/'.$id,
       ),
     );
     $this->create();
@@ -280,7 +280,7 @@ class TwitterStatus extends TwitterAppModel {
   public function delete($id = null, $cascade = true) {
     $this->request = array(
       'uri' => array(
-        'path' => '1/statuses/destroy',
+        'path' => '1.1/statuses/destroy',
         'query' => array(
           'id' => $id,
         ),

@@ -125,7 +125,7 @@ class Twitpic extends TwitterAppModel {
       'uri' => array(
         'scheme' => 'https',
         'host' => 'api.twitter.com',
-        'path' => '1/account/verify_credentials.json',
+        'path' => '1.1/account/verify_credentials.json',
       ),
       'method' => 'GET',
       'auth' => array(
@@ -172,7 +172,7 @@ class Twitpic extends TwitterAppModel {
       ),
       'header' => array(
         'Content-Type' => 'multipart/form-data; boundary="' . $boundaryString . '"',
-        'X-Auth-Service-Provider' => 'https://api.twitter.com/1/account/verify_credentials.json',
+        'X-Auth-Service-Provider' => 'https://api.twitter.com/1.1/account/verify_credentials.json',
         'X-Verify-Credentials-Authorization' => $authorizationHeader
       ),
       'body' => $body,

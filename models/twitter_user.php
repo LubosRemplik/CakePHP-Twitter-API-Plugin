@@ -114,7 +114,7 @@ class TwitterUser extends TwitterAppModel {
   protected function _findSearch($state, $query = array(), $results = array()) {
     if ($state == 'before') {
       $this->request['uri']['host'] = 'api.twitter.com';
-      $this->request['uri']['path'] = '1/users/search';
+      $this->request['uri']['path'] = '1.1/users/search';
       if (isset($query['conditions']['id'])) {
         $this->request['uri']['path'] .= $query['conditions']['id'];
       }
